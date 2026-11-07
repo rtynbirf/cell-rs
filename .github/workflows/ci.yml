@@ -1,0 +1,18 @@
+# Метаболизм Rust-клетки: приёмки на каждый push/PR. Компилятор клетки —
+# CI (rust toolchain предустановлен на раннере ubuntu-latest); красный
+# прогон = клетка больна. Actions пинуются SHA-каноном роя.
+name: metabolism
+
+permissions:
+  contents: read
+
+on:
+  push:
+  pull_request:
+jobs:
+  cell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: verify — приёмки ядра: допуск, векторы NIST, байт-цепь
+        run: make verify

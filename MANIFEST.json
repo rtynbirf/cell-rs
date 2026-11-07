@@ -1,0 +1,19 @@
+{
+  "manifest_version": "0.1.0",
+  "name": "cell-rs",
+  "kind": "cell",
+  "role": "первая Rust-клетка: ядро контура сверки (Tolerance/reconcile/Phase, sha256, байт-цепь), без зависимостей",
+  "license": "Apache-2.0",
+  "membrane": {
+    "human": "README.md",
+    "agents": "AGENTS.md",
+    "machines": "llms.txt"
+  },
+  "metabolism": {
+    "verify": "make verify"
+  },
+  "body": {
+    "decisions": "docs/adr/"
+  },
+  "laws_ref": "пять законов роя: docs/adr/ ядра (cell-swarm)"
+}

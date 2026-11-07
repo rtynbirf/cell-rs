@@ -1,0 +1,9 @@
+# cell-rs
+Первая Rust-клетка роя rtynbirf: ядро контура сверки без зависимостей.
+Сверка: Tolerance {eps, deadband} + reconcile(observed, desired) -> Phase (Nominal|Drift).
+Хеш: sha256 с нуля (векторы NIST в приёмках). Цепь: seal_line/verify_chain,
+формат `seq|payload|prev_hash|hash`, генезис = 64 нуля, tamper-evident.
+Метаболизм: make verify = cargo test, компилятор — CI GitHub Actions.
+Семантика допуска совпадает с Python-ядром rtynbirf/runtime-protocol (blood.py).
+Пин клетки живёт в геноме rtynbirf/cell-swarm (swarm.json), по памяти не вносится.
+Лицензия: Apache-2.0. Язык: Rust, edition 2021, v0.1 (без serde — честная граница).
