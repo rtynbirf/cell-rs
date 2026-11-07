@@ -1,5 +1,8 @@
 # cell-rs — первая Rust-клетка роя
 
+<p align="center"><img src=".github/social-preview.png" alt="cell-rs" width="100%"></p>
+
+
 Ядро контура сверки на Rust, без единой зависимости: клетка сама себе хеш.
 
 ## Что внутри (v0.1, честные границы)
