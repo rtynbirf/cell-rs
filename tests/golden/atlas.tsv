@@ -1,0 +1,16 @@
+# Негативный атлас хеш-цепи · канон (ПРЕДЛОЖЕНИЕ-08, issue #1, волна ×3 W3-A2).
+# case<TAB>mutation<TAB>first<TAB>reason<TAB>notok · first — индекс первой раны или «-».
+# База — синтетическая цепь 10 конвертов (та же, что tests/chain_golden_probes.rs и
+# wave3_golden.py --synthetic). Мутации: flip:<i>:<off> xor 1 байта, seq:<i>:<v>,
+# torn:<i> рваный JSON, foreign:<i> конверт без prev; pristine — позитивный контроль.
+# Ожидания посчитаны Python-стороной (wave3/chain_atlas.py); Rust-пробы обязаны
+# повторить каждый вердикт (двойная запись: один алгоритм — два вычислителя).
+# Правки строк — только дополнением; --check ловит дрейф ожиданий.
+pristine	pristine	-	OK	0
+mid-byte-3	flip:3:10	3	HASH	7
+mid-byte-5	flip:5:10	5	HASH	5
+tail-byte-9	flip:9:10	9	HASH	1
+genesis-byte-0	flip:0:4	0	HASH	10
+wrong-seq-7	seq:7:9	7	SEQ	1
+torn-json-4	torn:4	4	JSON	6
+foreign-prev-6	foreign:6	6	JSON	4

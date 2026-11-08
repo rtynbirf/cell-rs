@@ -16,3 +16,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: "verify — приёмки ядра: допуск, векторы NIST, байт-цепь"
         run: make verify
+      - name: "wave3 · тампер-очевидность: самопроба атласа (4/4)"
+        run: python3 wave3/chain_atlas.py --selftest
+      - name: "wave3 · золотые пробы: атлас == факт (emit → check идемпотентен)"
+        run: |
+          python3 wave3/chain_atlas.py --emit
+          python3 wave3/chain_atlas.py --check
