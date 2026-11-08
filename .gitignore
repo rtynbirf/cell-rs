@@ -1,4 +1,15 @@
+/target/
 /target
 Cargo.lock.bak
-*.swp
+
+# Системный и редакторский мусор
 .DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# Временные файлы
+*.tmp
+*.orig
