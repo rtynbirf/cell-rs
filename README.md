@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="banner.png" alt="cell-rs — Первая Rust-клетка роя: ядро контура сверки" width="100%">
+</div>
+
 # cell-rs — первая Rust-клетка роя
 
 <p align="center"><img src=".github/social-preview.png" alt="cell-rs" width="100%"></p>
