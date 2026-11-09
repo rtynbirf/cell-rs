@@ -93,7 +93,7 @@ fn main() -> ExitCode {
     // запечатан в байтах и несёт payload.cells с ожиданием каждого тела
     // цепи. Эхо-конверт (его несёт dispatch) ожиданий не имеет по канону —
     // поэтому точную сверку клетки с геномом делает ЗДЕСЬ второй язык.
-    if let Some(genome_expectation) = cell_rs::blood::expected_sha_for_cell(&ledger_raw, cell) {
+    if let Some(genome_expectation) = cell_rs::blood::latest_expected_sha_in_ledger(&ledger_raw, cell) {
         if genome_expectation == cell_sha {
             println!("ФАКТ: Rust-гейт: геномное ожидание (из летописи) = живой github.sha — сверка вторым языком: VERIFIED");
         } else {

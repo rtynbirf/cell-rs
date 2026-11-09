@@ -101,3 +101,25 @@ fn envelope_of_ledger_line_is_sealed_in_ledger() {
     let stranger = r#"{"hash":"1111111111111111111111111111111111111111111111111111111111111111"}"#;
     assert!(!envelope_sealed_in_ledger(stranger, GOLDEN));
 }
+
+#[test]
+fn latest_genome_expectation_wins() {
+    // летопись append-only: два геномных пульса с РАЗНЫМИ ожиданиями для
+    // cell-rs — актуально последнее (артефакт чтения «первого» ловил старый пульс)
+    let golden = golden_lines()[0];
+    let old_expectation = expected_sha_for_cell(golden, "polymath-os").unwrap();
+    let newer_pulse = format!(
+        "{{\"dst\":\"runtime-protocol\",\"hash\":\"{}\",\"payload\":{{\"cells\":{{\"polymath-os\":\"{}\",\"cell-rs\":\"{}\"}}}},\"prev_hash\":\"{}\",\"seq\":99,\"src\":\"cell-swarm\",\"ts\":\"2026-11-09T16:00:00Z\",\"ttl_s\":900,\"v\":1}}",
+        "a".repeat(64), "b".repeat(40), "c".repeat(40), "d".repeat(64)
+    );
+    let ledger = format!("{golden}\n{newer_pulse}\n");
+    assert_eq!(
+        cell_rs::blood::latest_expected_sha_in_ledger(&ledger, "cell-rs"),
+        Some("c".repeat(40).as_str()),
+        "актуальное ожидание = из ПОСЛЕДНЕГО геномного пульса"
+    );
+    assert_eq!(
+        cell_rs::blood::latest_expected_sha_in_ledger(&ledger, "polymath-os"),
+        Some("b".repeat(40).as_str())
+    );
+}

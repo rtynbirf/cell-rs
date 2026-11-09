@@ -78,6 +78,29 @@ pub fn expected_sha_for_cell<'a>(envelope_raw: &'a str, _cell: &str) -> Option<&
     extract_hex_field(envelope_raw, _cell, 40)
 }
 
+/// Актуальное ожидание клетки из ЛЕТОПИСИ: летопись append-only, геномные
+/// пульсы накапливаются — актуально ПОСЛЕДНЕЕ совпадение (волна ×9: гейт
+/// брал первое и ловил старый пульс №1 вместо свежего — вердикт DRIFT
+/// рождался из артефакта чтения, не из дрейфа тела).
+pub fn latest_expected_sha_in_ledger<'a>(ledger_raw: &'a str, cell: &str) -> Option<&'a str> {
+    let needle = format!("\"{cell}\":\"");
+    let mut last: Option<&'a str> = None;
+    let mut start = 0usize;
+    while let Some(pos) = ledger_raw[start..].find(&needle) {
+        let abs = start + pos + needle.len();
+        let rest = &ledger_raw[abs..];
+        let chars: Vec<char> = rest.chars().collect();
+        if chars.len() >= 40
+            && chars[..40].iter().all(|c| c.is_ascii_hexdigit())
+            && chars.get(40) == Some(&'"')
+        {
+            last = Some(&rest[..40]);
+        }
+        start = start + pos + needle.len();
+    }
+    last
+}
+
 /// Публичная обёртка: хеш конверта из его сырой строки (64 hex).
 pub fn envelope_hash_field(envelope_raw: &str) -> Option<&str> {
     extract_hex_field(envelope_raw, "hash", 64)
