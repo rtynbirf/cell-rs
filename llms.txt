@@ -7,3 +7,5 @@
 Семантика допуска совпадает с Python-ядром rtynbirf/runtime-protocol (blood.py).
 Пин клетки живёт в геноме rtynbirf/cell-swarm (swarm.json), по памяти не вносится.
 Лицензия: Apache-2.0. Язык: Rust, edition 2021, v0.1 (без serde — честная граница).
+- [AGENTS.md](AGENTS.md): мембрана роя — исполняемый договор для ИИ-агентов (Never do).
+- [PULSE.md](PULSE.md): живой пульс репозитория — прогоны, пломбы, здоровье.
