@@ -89,7 +89,21 @@ fn main() -> ExitCode {
     }
     println!("ФАКТ: конверт запечатан в летописи (хеш найден в байтах)");
 
-    // 3. Вердикт клетки: ожидание ↔ тело, eps=0 (точно).
+    // 2b. Геномное ожидание из летописи: геномный пульс (src=cell-swarm)
+    // запечатан в байтах и несёт payload.cells с ожиданием каждого тела
+    // цепи. Эхо-конверт (его несёт dispatch) ожиданий не имеет по канону —
+    // поэтому точную сверку клетки с геномом делает ЗДЕСЬ второй язык.
+    if let Some(genome_expectation) = cell_rs::blood::expected_sha_for_cell(&ledger_raw, cell) {
+        if genome_expectation == cell_sha {
+            println!("ФАКТ: Rust-гейт: геномное ожидание (из летописи) = живой github.sha — сверка вторым языком: VERIFIED");
+        } else {
+            println!("ФАКТ: Rust-гейт: геномное ожидание {genome_expectation} != тело {cell_sha} — DRIFT (честный факт дрейфа, не подделка)");
+        }
+    } else {
+        println!("ФАКТ: геномное ожидание для {cell} в летописи не найдено — клетка вне текущего пульса генома");
+    }
+
+    // 3. Вердикт клетки над входящим конвертом (канон ядра: эхо не несёт payload.cells)
     match blood_verdict(envelope_raw.trim(), cell, cell_sha) {
         Verdict::Verified => {
             println!("ФАКТ: Rust-гейт: {cell} VERIFIED — ожидание генома = живой github.sha");

@@ -48,23 +48,27 @@ pub enum Verdict {
 }
 
 /// Извлечь значение hex-поля `"field":"<hexlen hex>"` из сырой JSON-строки.
-/// Паттерн строг: открывающая и закрывающая кавычки обязательны, длина
-/// значения ровно hexlen, вокруг — не hex-символы. Возвращает ПЕРВОЕ вхождение.
+/// Форматы: компакт (`"hash":"..."`) и GitHub toJson (pretty-print 2 пробела,
+/// `"hash": "..."`) — волна ×9: dispatch payload приходит pretty-печатанным
+/// (423 байта против 359 компактных — диагноз живого красного 42644309437).
+/// Паттерн строг: длина значения ровно hexlen, дальше — кавычка.
+/// Возвращает ПЕРВОЕ вхождение.
 fn extract_hex_field<'a>(raw: &'a str, field: &str, hexlen: usize) -> Option<&'a str> {
-    let needle = format!("\"{field}\":\"");
-    let mut start = 0usize;
-    while let Some(pos) = raw[start..].find(&needle) {
-        let abs = start + pos + needle.len();
-        let rest = &raw[abs..];
-        let chars: Vec<char> = rest.chars().collect();
-        if chars.len() >= hexlen
-            && chars[..hexlen].iter().all(|c| c.is_ascii_hexdigit())
-            && chars.get(hexlen) == Some(&'"')
-        {
-            // первые hexlen символов — hex (по байту каждый), дальше кавычка
-            return Some(&rest[..hexlen]);
+    for needle in [format!("\"{field}\":\""), format!("\"{field}\": \"")] {
+        let mut start = 0usize;
+        while let Some(pos) = raw[start..].find(&needle) {
+            let abs = start + pos + needle.len();
+            let rest = &raw[abs..];
+            let chars: Vec<char> = rest.chars().collect();
+            if chars.len() >= hexlen
+                && chars[..hexlen].iter().all(|c| c.is_ascii_hexdigit())
+                && chars.get(hexlen) == Some(&'"')
+            {
+                // первые hexlen символов — hex (по байту каждый), дальше кавычка
+                return Some(&rest[..hexlen]);
+            }
+            start = start + pos + needle.len();
         }
-        start = start + pos + needle.len();
     }
     None
 }
@@ -167,5 +171,18 @@ mod tests {
         assert_eq!(extract_hex_field(raw, "hash", 6), None);
         let raw2 = r#"{"hash":"abc12g"}"#; // g — не hex
         assert_eq!(extract_hex_field(raw2, "hash", 6), None);
+    }
+
+    #[test]
+    fn extract_accepts_pretty_print_github_tojson() {
+        // GitHub toJson = pretty-print 2 пробела: "hash": "..." (после двоеточия пробел)
+        let pretty = "{\n  \"dst\": \"cell-swarm\",\n  \"hash\": \"aabbccddeeff\",\n  \"payload\": {\n    \"pulse\": 4\n  }\n}";
+        assert_eq!(extract_hex_field(pretty, "hash", 12), Some("aabbccddeeff"));
+        // и ожидание клетки из payload.cells тоже читается
+        let cells = "{\n    \"cells\": {\n      \"cell-rs\": \"71431de7f0123456789abcdef0123456789abcde\"\n    }\n}";
+        assert_eq!(
+            expected_sha_for_cell(cells, "cell-rs"),
+            Some("71431de7f0123456789abcdef0123456789abcde")
+        );
     }
 }
