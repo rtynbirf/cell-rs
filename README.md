@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="banner.png" alt="cell-rs — Первая Rust-клетка роя: ядро контура сверки" width="100%">
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/cell-rs@main/banner.png" alt="cell-rs — Первая Rust-клетка роя: ядро контура сверки" width="100%">
 </div>
 
 <!--ФОРЖ:МУЗА:НАЧАЛО-->
 <div align="center">
-  <img src="repo-muse.svg" width="100%" alt="Муза cell-rs: мастерская КЛАДКА RUST, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/cell-rs@main/repo-muse.svg" width="100%" alt="Муза cell-rs: мастерская КЛАДКА RUST, кузня ПОЛИМАТ, раунд 12 · REVE=РЕВО" />
   <br/>
-  <img src="forge-divider.svg" width="62%" alt="делитель мастерской КЛАДКА RUST" />
+  <img src="https://cdn.jsdelivr.net/gh/rtynbirf/cell-rs@main/forge-divider.svg" width="62%" alt="делитель мастерской КЛАДКА RUST" />
 </div>
 <!--ФОРЖ:МУЗА:КОНЕЦ-->
 
@@ -24,7 +24,7 @@
 
 # cell-rs — первая Rust-клетка роя
 
-<p align="center"><img src=".github/social-preview.png" alt="cell-rs" width="100%"></p>
+<p align="center"><img src="https://cdn.jsdelivr.net/gh/rtynbirf/cell-rs@main/.github/social-preview.png" alt="cell-rs" width="100%"></p>
 
 
 Ядро контура сверки на Rust, без единой зависимости: клетка сама себе хеш.
