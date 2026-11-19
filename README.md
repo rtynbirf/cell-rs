@@ -1,4 +1,10 @@
 <div align="center">
+
+<a href="https://github.com/rtynbirf/cell-rs"><img src="banner.png" width="100%" alt="cell-rs — штандарт мастерской в каноне ORNAMENTAL MYTHO-REALISM"></a>
+
+</div>
+
+<div align="center">
   <img src="https://cdn.jsdelivr.net/gh/rtynbirf/cell-rs@main/banner.png" alt="cell-rs — Первая Rust-клетка роя: ядро контура сверки" width="100%">
 </div>
 
@@ -17,7 +23,7 @@
 
 | ФАЙЛОВ | ПАПОК | КОММИТОВ | ОБНОВЛЕНО | РЕЛИЗОВ |
 |---:|---:|---:|---|---:|
-| 52 | 10 | 103 | 2026-11-19 | 0 |
+| 52 | 10 | 104 | 2026-11-19 | 0 |
 <!--ФОРЖ:ПАСПОРТ:КОНЕЦ-->
 
 
